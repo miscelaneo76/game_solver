@@ -1,0 +1,14 @@
+#game-solver, #gs-warn {
+    position: fixed;
+    background: black;
+    color: white;
+    display: None;
+    z-index:1000;
+    width: 100%;
+}
+#game-solver > * {
+    margin: 8px;
+}
+#gs-timespan {
+    width: 50px;
+}

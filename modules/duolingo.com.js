@@ -1,11 +1,6 @@
 import {addRequestListener} from '../devtools_utils.js'
-let struct = {
-    method: 'GET',
-    url: new RegExp('^https://www.duolingo.com/2017-06-30/users/\\d+\\?fields[^&]*[=,]currentCourse[,&]')
-}
-addRequestListener(struct);
 
-struct = {
+let struct = {
     method: 'POST',
     url: new RegExp('^https://www.duolingo.com/2017-06-30/sessions$')
 }

@@ -88,7 +88,7 @@ function addAutofillListener(manager){
 function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, expectedChildClass, exitCallback, label) {
     let level0 = 0;
     const nodes = upcomingClasses.map(cl => undefined);
-    new MutationObserver((records, observer) => {
+    const monitor = (records, observer) => {
         let level1 = upcomingClasses.length;
         for(let i=0;i < upcomingClasses.length;i++){
             const node = document.getElementsByClassName(upcomingClasses[i])[0];
@@ -121,5 +121,10 @@ function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, expec
             }
         }
         level0 = level1;
-    }).observe(root, {childList: true})
+    }
+    const observer = new MutationObserver(monitor)
+    observer.observe(root, {childList: true});
+    monitor([], observer);
 }
+
+const wait = time => new Promise(resolve => setTimeout(resolve, time));

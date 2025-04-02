@@ -190,4 +190,4 @@ const upcomingClasses = [
     'learning-layout',
     'learning-layout__content',
     'learning-layout__fade']
-addComponentsTriggers(document.getElementById('react-root'), upcomingClasses, init, 4, 'sc-fivaXQ');
+addComponentsTriggers(document.getElementById('react-root'), upcomingClasses, init, 4, 'loader');

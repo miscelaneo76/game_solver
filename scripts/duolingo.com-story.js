@@ -85,4 +85,4 @@ function initStory(node0, callInit=true){
     });
 }
 let upcomingClasses = ['_2kkzG', '_3eVxP _2ocdD', '_3QKn2', '_2neC7']
-addComponentsTriggers(root, upcomingClasses, initStory, 2, undefined, exitCallback, 'story');
+addComponentsTriggers(root, upcomingClasses, initStory, 2, undefined, exitCallback);

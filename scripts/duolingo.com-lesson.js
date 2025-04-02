@@ -272,7 +272,7 @@ function initChallenge(node0){
 
 function initLesson(node0){
     challengeIndex = -1;
-    addComponentsTriggers(node0, ['_1Mopf'], initChallenge, undefined, undefined, undefined, 'lesson1');
+    addComponentsTriggers(node0, ['_1Mopf'], initChallenge, undefined, undefined, undefined);
     const footer = document.getElementById('session/PlayerFooter')
     new MutationObserver(records=>{
         if(footer.classList.contains('_2cfV0')){
@@ -280,4 +280,4 @@ function initLesson(node0){
         }
     }).observe(footer, {attributeFilter: ['class']})
 }
-addComponentsTriggers(root, ['_2kkzG', '_29gfw', '_3GuWo _1cTBC',], initLesson, 2, undefined, exitCallback, 'lesson0');
+addComponentsTriggers(root, ['_2kkzG', '_29gfw', '_3GuWo _1cTBC',], initLesson, 2, undefined, exitCallback);

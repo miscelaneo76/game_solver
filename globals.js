@@ -85,7 +85,7 @@ function addAutofillListener(manager){
     }, {passive: true});
 }
 
-function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, expectedChildClass, exitCallback, label) {
+function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, notExpectedChildClass, exitCallback) {
     let level0 = 0;
     const nodes = upcomingClasses.map(cl => undefined);
     const monitor = (records, observer) => {
@@ -101,7 +101,7 @@ function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, expec
                     nodes[i] = node;
                     observer.observe(node, {childList: true});
                 } else {
-                    if(!expectedChildClass || [...node?.firstChild.classList].includes(expectedChildClass)){
+                    if(!notExpectedChildClass || ![...node?.firstChild.classList].includes(notExpectedChildClass)){
                         nodes[i] = node;
                         callback(node)
                     } else {

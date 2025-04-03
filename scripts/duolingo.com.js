@@ -118,19 +118,21 @@ async function readDb(query){
     }
 }
 
-function addDbEvents(node0){
-    const observer = new MutationObserver(records =>{
-        for(const node1 of node0.getElementsByClassName('_1rcV8 _1VYyp _1ursp _7jW2t PbV1v _2sYfM _19ped')){
-            if(node1.getAttribute('href')?.at(7) == '/'){
-                continue
-            }
-            node1.addEventListener('click', ev => readDb(ev.target.href), {passive: true});
+const observer = new MutationObserver(records =>{
+    for(const node1 of document.getElementsByClassName('_1rcV8 _1VYyp _1ursp _7jW2t PbV1v _2sYfM _19ped')){
+        if(node1.getAttribute('href')?.at(7) == '/'){
+            continue
         }
-    })
+        node1.addEventListener('click', ev => readDb(ev.target.href), {passive: true});
+    }
+})
+
+function addDbEvents(node0){
     for(const node1 of node0.getElementsByClassName('R7x3_ _8Iu6E')){
         observer.observe(node1, {'childList': true});
     }
 }
 const root = document.getElementById('root');
-addComponentsTriggers(root, ['_2kkzG', 'AkzqY' ,'wl71D', '_41Y_n _2CoFd _2SLKP'], addDbEvents)    
+addComponentsTriggers(root, ['_2kkzG', 'AkzqY', 'wl71D', '_41Y_n _2CoFd _2SLKP'], addDbEvents)
+addComponentsTriggers(root, ['_2kkzG', 'wl71D', '_41Y_n _2CoFd _2SLKP'], addDbEvents)
 gs_retry.style.display='none';

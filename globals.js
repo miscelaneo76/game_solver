@@ -15,6 +15,7 @@ gs_input.type = 'number';
 gs_input.id = 'gs-timespan';
 gs_input.name= 'timespan';
 gs_input.value = 1;
+gs_input.min = 0.01;
 game_solver.appendChild(gs_input);
 const gs_warn = document.createElement('div');
 gs_warn.id = 'gs-warn';

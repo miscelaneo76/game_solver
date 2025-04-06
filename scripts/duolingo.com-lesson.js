@@ -1,5 +1,7 @@
 const ordinals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th']
 let activeChallenge = {};
+let superChallenge;
+
 
 function getInputAnswer(challenge, node0, end=1){
     return Array.from(node0.getElementsByClassName('_3mwuq')).map(input => {
@@ -13,11 +15,12 @@ function getInputAnswer2(challenge, node0){
 function getMatchAnswer2(challenge, node0){
     const nodes = [...node0.getElementsByClassName('_3fmUm')]
     const dict = {}
-    nodes.slice(challenge.pairs.length).forEach(node1 => {
+    const length = Math.round(nodes.length / 2);
+    nodes.slice(length).forEach(node1 => {
         dict[node1.getAttribute('data-test')] = node1.getElementsByClassName('_231NG')[0].firstChild.innerHTML;
     });
     return (nodes
-        .slice(0, challenge.pairs.length)
+        .slice(0, length)
         .map((node1, index) => `${ordinals[index]}: ${dict[node1.getAttribute('data-test')]}`)
         .join('; '));
 }
@@ -25,7 +28,7 @@ function getMatchAnswer3(challenge, node0){
     const nodes = [...node0.getElementsByClassName('_3fmUm')]
     const dict = Object.fromEntries(challenge.pairs.map(pair => [pair.fromToken, pair.learningToken]));
     return (nodes
-        .slice(0, challenge.pairs.length)
+        .slice(0, Math.round(nodes.length / 2))
         .map(node1 => {
             const token = node1.getElementsByClassName('_231NG')[0].firstChild.innerHTML;
             return `${token}: ${dict[token]}`;
@@ -66,14 +69,17 @@ function fillMatch2(challenge, node0){
     })
 }
 function fillMatch3(challenge, node0){
-    const nodes = [...node0.getElementsByClassName('_3fmUm')]
+    const nodes = [...node0.getElementsByClassName('_3fmUm')];
+    const length = Math.round(nodes.length / 2);
     const dict0 = {};
     const dict1 = {};
-    fillDict(nodes.slice(0, challenge.pairs.length), dict0);
-    fillDict(nodes.slice(challenge.pairs.length), dict1);
+    fillDict(nodes.slice(0, length), dict0);
+    fillDict(nodes.slice(length), dict1);
     challenge.pairs.forEach(pair => {
-        dict0[pair.fromToken].click();
-        dict1[pair.learningToken].click();
+        if(dict0[pair.fromToken] && dict1[pair.learningToken]){
+            dict0[pair.fromToken].click();
+            dict1[pair.learningToken].click();    
+        }
     });
 }
 function fillCorrectIndex(challenge, node){
@@ -166,7 +172,9 @@ const lessonAnswers = {
     completeReverseTranslation: getInputAnswer,
     partialReverseTranslate: getInputAnswer2,
     match: getMatchAnswer3,
+    extendedMatch: getMatchAnswer3,
     listenMatch: getMatchAnswer2,
+    extendedListenMatch: getMatchAnswer2,
     selectPronunciation: challenge => challenge.choices[challenge.correctIndex].text,
     sameDifferent: challenge => challenge.options[challenge.correctIndex],
 }
@@ -191,7 +199,9 @@ const lessonCleans = {
     completeReverseTranslation: null,
     partialReverseTranslate: null,
     match: null,
+    extendedMatch: null,
     listenMatch: null,
+    extendedListenMatch: null,
     selectPronunciation: null,
     sameDifferent: null,
 }
@@ -216,51 +226,66 @@ const lessonFills = {
     completeReverseTranslation:fillType,
     partialReverseTranslate: fillType2,
     match: fillMatch3,
+    extendedMatch: fillMatch3,
     listenMatch: fillMatch2,
+    extendedListenMatch: fillMatch2,
     selectPronunciation: fillCorrectIndex,
     sameDifferent: fillCorrectIndex,
 }
 
 function initChallenge(node0){
+    clearInterval(challengeIntervalId);
+    challengeIntervalId = undefined;
     const node1 = node0.getElementsByClassName('w2K8w')[0];
     if(!session.challenges){
         sessionCallback = () => initChallenge(node0)
         return
     }
     activeChallenge = undefined
-    if(node1){
-        if(node1.style.color == 'rgb(var(--color-cardinal))'){
-            if (session.adaptiveChallenges && hardChallengeIndex < session.adaptiveChallenges.length - 1){
-                hardChallengeIndex++
-                activeChallenge = session.adaptiveChallenges[hardChallengeIndex];    
-            }
-        } else if(challengeIndex >= session.challenges.length - 1){
-            activeChallenge = errorChallenges.shift();
+    const type = node0.getAttribute('data-test').split('-').at(-1);
+    if (['extendedListenMatch', 'extendedMatch'].includes(type)){
+        if (!superChallenge){
+            superChallenge = {pairs: []};
+            session.challenges.forEach(challenge => {
+                if(challenge.pairs){
+                    superChallenge.pairs.push(...challenge.pairs);
+                }
+            })
         }
-    } 
-    if (!activeChallenge){
-        if (challengeIndex >= session.challenges - 1){
+        activeChallenge = superChallenge;
+    } else {
+        if(node1){
+            if(node1.style.color == 'rgb(var(--color-cardinal))'){
+                if (session.adaptiveChallenges && hardChallengeIndex < session.adaptiveChallenges.length - 1){
+                    hardChallengeIndex++
+                    activeChallenge = session.adaptiveChallenges[hardChallengeIndex];    
+                }
+            } else if(challengeIndex >= session.challenges.length - 1){
+                activeChallenge = errorChallenges.shift();
+            }
+        } 
+        if (!activeChallenge){
+            if (challengeIndex >= session.challenges - 1){
+                return
+            }
+            challengeIndex++;
+            activeChallenge = session.challenges[challengeIndex];
+        }
+        if(type != activeChallenge.type && 'adaptiveInterleavedChallenges' in session){
+            const obj = session.adaptiveInterleavedChallenges;
+            const index = obj.speakOrListenReplacementIndices[challengeIndex];
+            activeChallenge = obj.challenges[index];
+        }
+        if(activeChallenge?.type != type){
+            initChallenge(node0)
             return
         }
-        challengeIndex++;
-        activeChallenge = session.challenges[challengeIndex];
-    }
-
-    const type = node0.getAttribute('data-test').split('-').at(-1);
-    if(type != activeChallenge.type && 'adaptiveInterleavedChallenges' in session){
-        const obj = session.adaptiveInterleavedChallenges;
-        const index = obj.speakOrListenReplacementIndices[challengeIndex];
-        activeChallenge = obj.challenges[index];
-    }
-    if(activeChallenge?.type != type){
-        initChallenge(node0)
-        return
-    }
-    if(!(type in lessonAnswers)){
-        gs_move.innerHTML = '';
-        fillManager.fill = () => {};
-        gs_suspend();
-        return
+        if(!(type in lessonAnswers)){
+            gs_move.innerHTML = '';
+            fillManager.fill = () => {};
+            gs_suspend();
+            return
+        }
     }
     gs_move.innerHTML = lessonAnswers[type](activeChallenge, node0);
     fillManager.clean = lessonCleans[type];
@@ -268,10 +293,16 @@ function initChallenge(node0){
         await lessonFills[type](activeChallenge, node0);
         fillManager.continueButton.click();
     }
+    if (['extendedListenMatch', 'extendedMatch'].includes(type)){
+        challengeIntervalId = setInterval(()=>{
+            gs_move.innerHTML = lessonAnswers[type](activeChallenge, node0);
+            }, 5000);
+    }
 }
 
 function initLesson(node0){
     challengeIndex = -1;
+    superChallenge = undefined;
     addComponentsTriggers(node0, ['_1Mopf'], initChallenge, undefined, undefined, undefined);
     const footer = document.getElementById('session/PlayerFooter')
     new MutationObserver(records=>{

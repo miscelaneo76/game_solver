@@ -5,6 +5,7 @@ let errorChallenges = [];
 let challengeIndex = -1;
 let hardChallengeIndex = -1;
 let sessionCallback = null
+let challengeIntervalId; 
 
 function setSession(body){
     session = body;
@@ -18,7 +19,7 @@ function setSession(body){
 
 chrome.runtime.onMessage.addListener(
     function(body, sender, sendResponse) {
-        if (('elements' in body || 'challenges' in body) && ['less', 'prac', 'stor', 'alph'].includes(location.pathname.substring(1, 5))){
+        if (('elements' in body || 'challenges' in body) && ['less', 'prac', 'stor', 'alph', 'mist'].includes(location.pathname.substring(1, 5))){
             setSession(body);
         }
     });
@@ -57,6 +58,8 @@ function exitCallback(){
     errorChallenges = [];
     challengeIndex = -1;
     hardChallengeIndex = -1;
+    clearInterval(challengeIntervalId);
+    challengeIntervalId = undefined;
 }
 
 async function readDb(query){

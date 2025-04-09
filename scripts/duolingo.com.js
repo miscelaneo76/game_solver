@@ -136,6 +136,6 @@ function addDbEvents(node0){
     }
 }
 const root = document.getElementById('root');
-addComponentsTriggers(root, ['_2kkzG', 'AkzqY', 'wl71D', '_41Y_n _2CoFd _2SLKP'], addDbEvents)
-addComponentsTriggers(root, ['_2kkzG', 'wl71D', '_41Y_n _2CoFd _2SLKP'], addDbEvents)
+addComponentsTriggers(root, ['_2kkzG', 'AkzqY', 'wl71D', '_2HEhk', '_41Y_n _2CoFd _2SLKP'], addDbEvents)
+addComponentsTriggers(root, ['_2kkzG', 'wl71D', '_2HEhk', '_41Y_n _2CoFd _2SLKP'], addDbEvents)
 gs_retry.style.display='none';

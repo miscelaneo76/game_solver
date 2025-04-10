@@ -1,6 +1,6 @@
 function getMatchAnswer(element, node){
-    const dict = {}
-    element.matches.forEach(match => {
+    const dict = {};
+    (element.matches || element.fallbackHints).forEach(match => {
         dict[match.translation] = match.phrase;
     })
     return ([...node.firstChild.lastChild.firstChild.firstChild.getElementsByClassName('_231NG')]
@@ -11,8 +11,8 @@ function getMatchAnswer(element, node){
 }
 function fillMatch(element, node){
     return () => {
-        const dict = {}
-        element.matches.forEach(match => {
+        const dict = {};
+        (element.matches || element.fallbackHints).forEach(match => {
             dict[match.translation] = match.phrase;
         });
         const node0 = node.firstChild.lastChild.firstChild

@@ -1,7 +1,7 @@
 {
   "name": "Game solver",
   "description": "Expose solutions to gamified tasks whose solutions are in front end. Supports lyricstraining, chess.com, busuu & duolingo",
-  "version": "0.2",
+  "version": "0.3",
   "manifest_version": 3, 
   "icons": {
     "16": "images/icon-16.png",

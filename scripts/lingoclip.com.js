@@ -49,6 +49,7 @@
                 this.autofillWay = this.autofillWrite;
                 
             } else if(lt.game.page.exercise?.input == 'choice'){
+                this.choices = [];
                 for(let i=0; i < 4; i++){
                     this.choices.push(lt.game.page.playView.slotsView.$slots[i].textContent.toLowerCase())
                 }

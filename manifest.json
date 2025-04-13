@@ -35,7 +35,8 @@
     {
       "js": ["globals.js", "scripts/duolingo.com.js", "scripts/duolingo.com-lesson.js", "scripts/duolingo.com-story.js"],
       "css": ["styles.css"],
-      "matches": ["https://www.duolingo.com/*"]
+      "matches": ["https://www.duolingo.com/*"],
+      "world": "MAIN"
     }
   ]
 }

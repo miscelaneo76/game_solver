@@ -282,7 +282,7 @@
         const activeChallenge = Object.values(headerNode)[0]?.memoizedProps.children.props.challenge;
         const type = node0.getAttribute('data-test').split('-').at(-1);
         if(!(type in lessonAnswers)){
-            gs_move.innerHTML = '';
+            gs_answer.innerHTML = '';
             fillManager.fill = () => {};
             gs_suspend();
             return
@@ -298,7 +298,7 @@
             }
             activeChallenge = superChallenge;
         }*/
-        gs_move.innerHTML = lessonAnswers[type](activeChallenge, node0);
+        gs_answer.innerHTML = lessonAnswers[type](activeChallenge, node0);
         fillManager.clean = lessonCleans[type];
         fillManager.fill = async () => {
             await lessonFills[type](activeChallenge, node0);
@@ -306,7 +306,7 @@
         }
         if (['extendedListenMatch', 'extendedMatch'].includes(type)){
             challengeIntervalId = setInterval(()=>{
-                gs_move.innerHTML = lessonAnswers[type](activeChallenge, node0);
+                gs_answer.innerHTML = lessonAnswers[type](activeChallenge, node0);
                 }, 5000);
         }
     }

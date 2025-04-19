@@ -12,7 +12,7 @@ This Chrome extension exposes solutions in gamicated tasks when solutions have a
     - https://www.chess.com/puzzles/rush
     - https://www.busuu.com/dashboard
     - https://www.duolingo.com/
-4. Open the dev tools (Shit + Ctrl + I) if it's necessary
+4. Open the dev tools (Shit + Ctrl + I) if it's necessary.
 5. The extension will add a bar at the top of website giving the expected solution to type or click as long as solutions were captured in a request. It also gives the option to autocomplete with a constant gap clicking a button.
 
 ## Scope
@@ -20,7 +20,9 @@ This Chrome extension exposes solutions in gamicated tasks when solutions have a
 
 ## Ways to develop
     Follow these prioritized ways to retrieve answers:
-        1. From HTML content
-        2. From localtorage
-        3. From javascript objects created by original app (instancing javascripts in world main)
-        4. From requests through dev tools
+        1. From HTML content.
+        2. From localtorage.
+        3. From javascript objects created by original app (instancing javascripts in world main).
+        4. From requests through dev tools.
+
+Join our [discord](https://discord.gg/qT7vTaWS6m).

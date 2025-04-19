@@ -1,0 +1,11 @@
+{
+    "answer": {"message": "Respuesta"},
+    "retry": {"message": "Reintentar"},
+    "seconds": {"message": "Segundos"},
+    "autofill": {"message": "Autocompletar"},
+    "suspend": {"message": "Suspender"},
+    "fill1": {"message": "Rellenar 1"},
+    "hide": {"message": "Ocultar"},
+    "warning": {"message": "Abre dev tools para ver las respuestas (Ctrl+Shit+I)<br/> Si el desafío ya inició, recarga la página (Ctrl + R)"},
+    "extensionDescription": {"message": "Exponer soluciones a tareas gamificadas cuyas soluciones están en el front. Soporta lyricstraining, chess.com, busuu & duolingo"}
+}

@@ -1,0 +1,11 @@
+{
+    "answer": {"message": "Answer"},
+    "retry": {"message": "Retry"},
+    "seconds": {"message": "Seconds"},
+    "autofill": {"message": "Autofill"},
+    "suspend": {"message": "Suspend"},
+    "fill1": {"message": "Fill 1"},
+    "hide": {"message": "Hide"},
+    "warning": {"message": "Open dev tools to see answers (Ctrl+Shit+I)<br/> If the challenge has started, reload the page (Ctrl + R)"},
+    "extensionDescription": {"message": "Expose solutions to gamified tasks whose solutions are in front end. Supports lyricstraining, chess.com, busuu & duolingo"}
+}

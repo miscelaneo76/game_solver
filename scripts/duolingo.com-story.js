@@ -70,11 +70,11 @@
             const type = element.type;
             (new MutationObserver(records => {
                 if (records.at(-1).addedNodes.length > 0 && type in storyAnswers){
-                    gs_move.innerHTML = storyAnswers[type](element, node1);
+                    gs_answer.innerHTML = storyAnswers[type](element, node1);
                     fillManager.clean = () => null;
                     fillManager.fill = storyFills[type](element, node1);
                 } else {
-                    gs_move.innerHTML = '';
+                    gs_answer.innerHTML = '';
                     fillManager.fill = () => {};
                 }
             })).observe(node1, {childList: true});

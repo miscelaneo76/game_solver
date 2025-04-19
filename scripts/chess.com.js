@@ -155,7 +155,7 @@ class InputManager{
         this.timeoutId = setTimeout(() => {
             let {move, piece, capture, promotion} = this.nextMove();
             if(!move){
-                gs_move.innerHTML = '';
+                gs_answer.innerHTML = '';
                 return null;
             }
             const [ix0, ix1] = move;
@@ -173,7 +173,7 @@ class InputManager{
                 }
                 moveStr = piece + ix2ChessPosition(ix0) + (capture ?'x':'') + ix2ChessPosition(ix1) + promotion;
             }
-            gs_move.innerHTML = moveStr;
+            gs_answer.innerHTML = moveStr;
         }, 512);
     }
 }
@@ -197,7 +197,7 @@ class AutoFillManager{
         }
         let [y0, x0]= divmod(ix0);
         let [y1, x1]= divmod(ix1);
-        const rect = board.getClientRects()[0]
+        const rect = board.getBoundingClientRect();
         x0 = Math.round(rect.left + rect.width / 8 * (x0 + .5));
         y0 = Math.round(rect.top + rect.height / 8 * (7.5 - y0));
         x1 = Math.round(rect.left + rect.width / 8 * (x1 + .5));

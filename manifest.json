@@ -1,7 +1,7 @@
 {
   "name": "Game solver",
-  "description": "Expose solutions to gamified tasks whose solutions are in front end. Supports lyricstraining, chess.com, busuu & duolingo",
-  "version": "0.3",
+  "description": "__MSG_extensionDescription__",
+  "version": "0.4",
   "manifest_version": 3, 
   "icons": {
     "16": "images/icon-16.png",
@@ -9,6 +9,7 @@
     "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
+  "default_locale": "en",
   "devtools_page": "devtools.html",
   "content_scripts": [
     {

@@ -147,10 +147,10 @@ function getExType(layout){
 function nextMove(layout){
     const exType = getExType(layout);
     if(!(exType in elements)){
-        gs_move.innerHTML = '';
+        gs_answer.innerHTML = '';
         return
     }
-    gs_move.innerHTML = answers[exType](elements[exType](layout));
+    gs_answer.innerHTML = answers[exType](elements[exType](layout));
 }
 
 class AutoFillManager{

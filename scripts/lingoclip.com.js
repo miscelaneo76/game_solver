@@ -7,14 +7,14 @@
     function listener(ev){
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
-            gs_move.innerHTML= lt.game.page.playView.cursor?.text;
+            gs_answer.innerHTML= lt.game.page.playView.cursor?.text;
         }, 512);
     }
 
     function init(records, observer){
         const target = records[0].target;
         if(game_play_view.style.display == 'block' && !play_video_warn.classList.contains('show')){        
-            gs_move.innerHTML= lt.game.page.playView.cursor?.text;
+            gs_answer.innerHTML= lt.game.page.playView.cursor?.text;
             game_solver.style.display = 'block';
             if(lt.game.page.exercise?.input == 'write'){
                 text_input.addEventListener('keypress', listener, {passive: true});

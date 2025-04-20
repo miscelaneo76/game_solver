@@ -62,7 +62,7 @@
     }
 
     function initStory(node0, callInit=true){
-        game_solver.style.display = 'block';
+        gsInit();
         const headerNode = document.getElementsByClassName("_2neC7")[0];
         const exercises = Object.values(headerNode)[0]?.return.memoizedProps.storyElements.filter(el => el.type in storyAnswers);
         Array.from(node0.getElementsByClassName('_9lM5k')).forEach((node1, ix)=>{

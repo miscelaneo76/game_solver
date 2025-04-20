@@ -4,4 +4,4 @@ if(challenge){
     inputManager.index = challenge.puzzleIndex || 0;
     inputManager.addPuzzles(challenge.puzzles || []);
 }
-game_solver.style.display = 'block';
+gsInit();

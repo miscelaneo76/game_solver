@@ -275,7 +275,7 @@
     }
 
     function initChallenge(node0){
-        game_solver.style.display = 'block';
+        gsInit()
         clearInterval(challengeIntervalId);
         challengeIntervalId = undefined;
         const headerNode = document.getElementsByClassName('_3EOK0')[0]

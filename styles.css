@@ -2,7 +2,7 @@
     position: fixed;
     background: black;
     color: white;
-    display: None;
+    display: none;
     z-index:1000;
     width: 100%;
     max-width: 100%;

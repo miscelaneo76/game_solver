@@ -1,3 +1,4 @@
+let game_solver_started = false;
 const game_solver = document.createElement('div');
 game_solver.id = 'game-solver';
 const gs_label = document.createElement('label');
@@ -35,10 +36,13 @@ gs_fill1.innerHTML = (chrome.i18n?.getMessage("fill1") || "Fill 1") + ' (Ctrl+Y)
 gs_fill1.id = 'gs-fill1';
 game_solver.appendChild(gs_fill1);
 const gs_hide = document.createElement('button');
-gs_hide.innerHTML = chrome.i18n?.getMessage("hide") || "Hide";
+gs_hide.innerHTML = (chrome.i18n?.getMessage("hide") || "Hide") + ' (Ctrl+I)';
 const hideAction = ev => {
-    game_solver.style.display = 'none';
-    gs_warn.style.display = 'none';
+    if(game_solver.style.display == 'block'){
+        game_solver.style.display = 'none';
+    } else if(game_solver_started){
+        game_solver.style.display = 'block';
+    }
 }
 gs_hide.addEventListener('click', hideAction, {passive: true});
 game_solver.appendChild(gs_hide);
@@ -125,7 +129,10 @@ gs_warn_message.id = "gs-warn-message";
 gs_warn_message.innerHTML = chrome.i18n?.getMessage("warning") || "Open dev tools to see answers (Ctrl+Shit+I)<br/> If the challenge has started, reload the page (Ctrl + R)";
 gs_warn.appendChild(gs_warn_message);
 const gs_hide2 = gs_hide.cloneNode(true);
-gs_hide2.addEventListener('click', hideAction, {passive: true});
+gs_hide2.innerHTML = gs_hide2.innerHTML.replace('(Ctrl+I)', '')
+gs_hide2.addEventListener('click', ev => {
+    gs_warn.style.display = 'none';
+}, {passive: true});
 gs_warn.appendChild(gs_hide2);
 game_solver.insertAdjacentElement('afterend', gs_warn);
 
@@ -174,6 +181,8 @@ function addAutofillListener(manager){
             fill1(ev);
         } else if(ev.ctrlKey && !ev.shiftKey && ev.key.toLowerCase() == 'z' && autofill_running){
             gs_suspend();
+        } else if(ev.ctrlKey && !ev.shiftKey && ev.key.toLowerCase() == 'i') {
+            hideAction(ev)
         }
     }, {passive: true});
 }
@@ -206,6 +215,7 @@ function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, notEx
         if(exitLevel != undefined && level1 < exitLevel && level0 >= exitLevel){
             gs_move.innerHTML = '';
             game_solver.style.display = 'none';
+            game_solver_started = false
             if(autofill_running){
                 gs_suspend();
             }
@@ -221,3 +231,9 @@ function addComponentsTriggers(root, upcomingClasses, callback, exitLevel, notEx
 }
 
 const wait = time => new Promise(resolve => setTimeout(resolve, time));
+
+function gsInit(){
+    gs_warn.style.display = 'none';
+    game_solver.style.display = 'block';
+    game_solver_started = true;
+}

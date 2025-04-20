@@ -31,7 +31,6 @@ addAutofillListener(fillManager);
 function exitCallback(){
     clearInterval(challengeIntervalId);
     challengeIntervalId = undefined;
-    game_solver.style.display = 'none';
 }
 
 function clickNode(className, node, index){

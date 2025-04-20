@@ -26,3 +26,4 @@ This Chrome extension exposes solutions in gamicated tasks when solutions have a
         4. From requests through dev tools.
 
 Join our [discord](https://discord.gg/qT7vTaWS6m).
+**Extension Link:** [Chrome Web Store](https://chromewebstore.google.com/detail/naoahljihfijdpilahahofpbbldlicgn)

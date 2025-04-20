@@ -179,7 +179,7 @@ let retryFunction = null;
 function init(layout){
     manager.layout = layout;
     nextMove(layout)
-    game_solver.style.display = 'block';
+    gsInit();
     gs_retry.removeEventListener('click', retryFunction);
     retryFunction = ev => nextMove(layout);
     gs_retry.addEventListener('click', retryFunction, {passive: true});

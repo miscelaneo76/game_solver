@@ -15,7 +15,7 @@
         const target = records[0].target;
         if(game_play_view.style.display == 'block' && !play_video_warn.classList.contains('show')){        
             gs_answer.innerHTML= lt.game.page.playView.cursor?.text;
-            game_solver.style.display = 'block';
+            gsInit();
             if(lt.game.page.exercise?.input == 'write'){
                 text_input.addEventListener('keypress', listener, {passive: true});
             } else if(lt.game.page.exercise?.input == 'choice'){

@@ -15,7 +15,7 @@
     {
       "js": ["globals.js", "scripts/lingoclip.com.js"],
       "css": ["styles.css"],
-      "matches": ["https://lyricstraining.com/en/play/*/*/*"],
+      "matches": ["https://lyricstraining.com/*/play/*/*/*", "https://lyricstraining.com/play/*/*/*"],
       "world": "MAIN"
     },
     {

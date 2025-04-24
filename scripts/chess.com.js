@@ -144,8 +144,8 @@ class InputManager{
         }
         fen = fen + ' ' + (document.getElementsByClassName('sidebar-status-square-black').length ? 'b' : 'w');
         if(!(fen in this.moves) && this.type == 'rush'){
-            const challenge = JSON.parse(localStorage.json_settings).rushChallenges[0];
-            this.addPuzzles(challenge.puzzles);
+            const challenge = JSON.parse(localStorage.json_settings).rushChallenges?.at(-1);
+            this.addPuzzles(challenge?.puzzles || []);
         }
         return this.moves[fen] || {};
     }

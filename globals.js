@@ -1,3 +1,4 @@
+const gs_ordinals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th']
 let game_solver_started = false;
 const game_solver = document.createElement('div');
 game_solver.id = 'game-solver';
@@ -26,13 +27,13 @@ const span = document.createElement('span');
 span.innerHTML = chrome.i18n?.getMessage("seconds") || "Seconds";
 game_solver.appendChild(span);
 const gs_autofill = document.createElement('button');
-const autofillStr = (chrome.i18n?.getMessage("autofill") || "Autofill") + ' (Ctrl+Shift+Y)';
-const suspendStr = (chrome.i18n?.getMessage("suspend") || "Suspend") + ' (Ctrl+Z)';
+const autofillStr = (chrome.i18n?.getMessage("autofill") || "Autofill") + ' (Ctrl+Shift+Enter)';
+const suspendStr = (chrome.i18n?.getMessage("suspend") || "Suspend") + ' (Ctrl+Shift+Enter)';
 gs_autofill.innerHTML = autofillStr;
 gs_autofill.id = 'gs-autofill';
 game_solver.appendChild(gs_autofill);
 const gs_fill1 = document.createElement('button');
-gs_fill1.innerHTML = (chrome.i18n?.getMessage("fill1") || "Fill 1") + ' (Ctrl+Y)';
+gs_fill1.innerHTML = (chrome.i18n?.getMessage("fill1") || "Fill 1") + ' (Ctrl+Enter)';
 gs_fill1.id = 'gs-fill1';
 game_solver.appendChild(gs_fill1);
 const gs_hide = document.createElement('button');
@@ -175,12 +176,14 @@ function addAutofillListener(manager){
     }
     gs_fill1.addEventListener('click', fill1, {passive: true});
     document.addEventListener('keyup', ev =>{
-        if(ev.ctrlKey && ev.shiftKey && ev.key.toLowerCase() == 'y' && !autofill_running){
-            fillAll(ev);
-        } else if(ev.ctrlKey && !ev.shiftKey && ev.key.toLowerCase() == 'y' ){
+        if(ev.ctrlKey && ev.shiftKey && ev.key.toLowerCase() == 'enter'){
+            if (autofill_running){
+                gs_suspend();
+            } else {
+                fillAll(ev);
+            }
+        } else if(ev.ctrlKey && !ev.shiftKey && ev.key.toLowerCase() == 'enter' ){
             fill1(ev);
-        } else if(ev.ctrlKey && !ev.shiftKey && ev.key.toLowerCase() == 'z' && autofill_running){
-            gs_suspend();
         } else if(ev.ctrlKey && !ev.shiftKey && ev.key.toLowerCase() == 'i') {
             hideAction(ev)
         }

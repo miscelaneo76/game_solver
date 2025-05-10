@@ -51,7 +51,23 @@ function getHighlightElements(layout){
 
 
 function getAnswers(elements, delimiter='; '){
-    return elements.map(el=>el.firstChild.innerHTML).join(delimiter)
+    return elements.map(el=>{
+        let response = el.firstChild.innerHTML;
+        const xpath = document.evaluate(`.//*[text()="${response}"]`, el.parentElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE,null);
+        let index = -1;
+        let count = 0;
+        while(el1 = xpath.iterateNext()){
+            if(el1.parentElement == el){
+                index = count;
+            }
+            count++;
+            if (index>=0 && count>1){
+                response += ` [${gs_ordinals[index]}]`;
+                break
+            }
+        }
+        return response;
+    }).join(delimiter)
 }
 function removeElements(code){
     [...document.getElementsByClassName(`ex-btn--${code}`)].forEach(el => el.click());
@@ -96,7 +112,7 @@ const answers = {
     'ex-typing': elements => elements.map(input => input.getAttribute('data-qa-pass')).join('; '),
     'ex-true-false': element => element.lastChild.textContent,
     'ex-mcq': element => element.lastChild.innerHTML,
-    'ex-highlighter': elements => elements.map(el=> el.firstChild.innerHTML).join('; '),
+    'ex-highlighter': getAnswers,
     'ex-fillgap-dragdrop': getAnswers,
     'ex-phrase-builder': elements => getAnswers(elements, ' '),
     'ex-spelling': elements => getAnswers(elements, ''),

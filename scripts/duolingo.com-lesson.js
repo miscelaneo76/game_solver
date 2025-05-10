@@ -1,8 +1,4 @@
 (() =>{
-
-    const ordinals = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th']
-    let superChallenge
-
     function getInputAnswer(challenge, node0, end=1){
         const nodes1 = Array.from(node0.getElementsByClassName('_3mwuq'))
         if (nodes1.length > 0){
@@ -26,7 +22,7 @@
         });
         return (nodes
             .slice(0, length)
-            .map((node1, index) => `${ordinals[index]}: ${dict[node1.getAttribute('data-test')]}`)
+            .map((node1, index) => `${gs_ordinals[index]}: ${dict[node1.getAttribute('data-test')]}`)
             .join('; '));
     }
     function getMatchAnswer3(challenge, node0){
@@ -193,7 +189,7 @@
         listenComprehension: challenge => challenge.choices[challenge.correctIndex],
         selectTranscription: challenge => challenge.choices[challenge.correctIndex].text,
         select: challenge => challenge.choices[challenge.correctIndex].phrase,
-        listenIsolation: challenge => ordinals[challenge.correctIndex],
+        listenIsolation: challenge => gs_ordinals[challenge.correctIndex],
         tapComplete: challenge => challenge.correctIndices.map(index => challenge.choices[index].text).join('; '),
         tapCompleteTable: getTapCompleteTable,
         tapCloze: challenge => challenge.correctIndices.map(index => challenge.choices[index]).join('; '),
@@ -287,17 +283,6 @@
             gs_suspend();
             return
         }
-        /*if (['extendedListenMatch', 'extendedMatch'].includes(type)){
-            if (!superChallenge){
-                superChallenge = {pairs: []};
-                session.challenges.forEach(challenge => {
-                    if(challenge.pairs){
-                        superChallenge.pairs.push(...challenge.pairs);
-                    }
-                })
-            }
-            activeChallenge = superChallenge;
-        }*/
         gs_answer.innerHTML = lessonAnswers[type](activeChallenge, node0);
         fillManager.clean = lessonCleans[type];
         fillManager.fill = async () => {
@@ -312,7 +297,6 @@
     }
 
     function initLesson(node0){
-        superChallenge = undefined;
         addComponentsTriggers(node0, ['_1Mopf'], initChallenge);
     }
     addComponentsTriggers(root, ['_2kkzG', '_29gfw', '_3GuWo _1cTBC',], initLesson, 2, undefined, exitCallback);

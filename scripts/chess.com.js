@@ -18,7 +18,16 @@ for(let i=1;i<=8;i++){
     spaces.push(Array.from({length:i}).fill(' ').join(''));
 }
 
-const board = document.getElementById('board-primary');
+let board = document.getElementById('board-primary');
+if(!board){
+    const boardParent = document.getElementById('board-layout-chessboard')
+    const observer = new MutationObserver((records, _observer) => {
+        board = document.getElementById('board-primary');
+        setMonitor()
+        _observer.disconnect();
+    })
+    observer.observe(boardParent, {childList: true});
+}
 game_solver.style.bottom = '0px'; // To not block chessboard in most cases
 
 class InputManager{
@@ -179,8 +188,13 @@ class InputManager{
 }
 
 const inputManager = new InputManager();
-const observer = new MutationObserver((records, observer) => inputManager.setMove());
-observer.observe(board, {childList: true});
+const setMonitor = () => {
+    if(board){
+        const observer = new MutationObserver((records, observer) => inputManager.setMove());
+        observer.observe(board, {childList: true});
+    }
+}
+setMonitor()
 
 class AutoFillManager{
 
